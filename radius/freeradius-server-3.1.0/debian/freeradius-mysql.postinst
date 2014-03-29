@@ -1,0 +1,34 @@
+#! /bin/sh
+
+set -e
+
+case "$1" in
+  configure)
+        for file in `find /etc/freeradius/mods-config/sql/main/mysql/ -print`
+        do
+          if ! dpkg-statoverride --list | grep -qw $file$; then
+            dpkg-statoverride --add --update root freerad 0640 $file
+          fi
+        done
+
+        for dir in /etc/freeradius/mods-config/sql/main \
+          /etc/freeradius/mods-config/sql/main/mysql
+        do
+          if ! dpkg-statoverride --list | grep -qw $dir$; then
+            dpkg-statoverride --add --update root freerad 2751 $dir
+          fi
+        done
+
+        if [ -x "`which invoke-rc.d 2>/dev/null`" ]; then
+          invoke-rc.d freeradius force-reload
+        else
+          /etc/init.d/freeradius force-reload
+        fi
+	;;
+esac
+
+#DEBHELPER#
+
+exit 0
+
+
