@@ -1,0 +1,87 @@
+mydir=lib/crypto
+BUILDTOP=$(REL)..$(S)..
+SUBDIRS= krb @CRYPTO_IMPL@ crypto_tests
+
+RUN_SETUP = @KRB5_RUN_ENV@
+PROG_LIBPATH=-L$(TOPLIBD)
+PROG_RPATH=$(KRB5_LIBDIR)
+DEFS=
+
+PROG_LIBPATH=-L$(TOPLIBD)
+PROG_RPATH=$(KRB5_LIBDIR)
+
+
+LIBBASE=k5crypto
+LIBMAJOR=3
+LIBMINOR=1
+LIBINITFUNC=cryptoint_initialize_library
+LIBFINIFUNC=cryptoint_cleanup_library
+RELDIR=crypto
+
+STOBJLISTS=krb/crc32/OBJS.ST krb/dk/OBJS.ST @CRYPTO_IMPL@/enc_provider/OBJS.ST	\
+	@CRYPTO_IMPL@/hash_provider/OBJS.ST krb/checksum/OBJS.ST  		\
+	krb/prf/OBJS.ST krb/rand2key/OBJS.ST 		 			\
+	krb/old/OBJS.ST krb/raw/OBJS.ST krb/yarrow/OBJS.ST 			\
+	@CRYPTO_IMPL@/md4/OBJS.ST @CRYPTO_IMPL@/md5/OBJS.ST @CRYPTO_IMPL@/sha1/OBJS.ST 		\
+	krb/arcfour/OBJS.ST  @CRYPTO_IMPL@/aes/OBJS.ST @CRYPTO_IMPL@/des/OBJS.ST	\
+	krb/OBJS.ST  @CRYPTO_IMPL@/OBJS.ST
+
+SUBDIROBJLISTS=krb/crc32/OBJS.ST krb/dk/OBJS.ST @CRYPTO_IMPL@/enc_provider/OBJS.ST 	\
+	@CRYPTO_IMPL@/hash_provider/OBJS.ST krb/checksum/OBJS.ST 		\
+	krb/prf/OBJS.ST krb/rand2key/OBJS.ST 		 			\
+	krb/old/OBJS.ST krb/raw/OBJS.ST  krb/yarrow/OBJS.ST 			\
+	@CRYPTO_IMPL@/md4/OBJS.ST @CRYPTO_IMPL@/md5/OBJS.ST	@CRYPTO_IMPL@/sha1/OBJS.ST 		\
+	krb/arcfour/OBJS.ST @CRYPTO_IMPL@/aes/OBJS.ST @CRYPTO_IMPL@/des/OBJS.ST		\
+	krb/OBJS.ST @CRYPTO_IMPL@/OBJS.ST
+
+# No dependencies.  Record places to find this shared object if the target
+# link editor and loader support it.
+DEPLIBS=
+SHLIB_DIRS=-L$(TOPLIBD)
+SHLIB_EXPLIBS= $(SUPPORT_LIB) @CRYPTO_LIBS@ $(LIBS)
+SHLIB_EXPDEPLIBS= $(SUPPORT_DEPLIB)
+SHLIB_LDFLAGS= $(LDFLAGS) @SHLIB_RPATH_DIRS@
+SHLIB_LIBDIRS= @SHLIB_LIBDIRS@
+SHLIB_RDIRS=$(KRB5_LIBDIR)
+
+##DOS##LIBOBJS = $(OBJS)
+
+all-unix:: all-liblinks
+install-unix:: install-libs
+
+
+# all-unix:: 
+# install-unix:: 
+
+libcrypto.lib:
+	libdir crypto.lib
+
+clean-unix:: clean-liblinks clean-libs clean-libobjs
+
+all-windows::
+	cd krb
+	@echo Making in crypto\krb
+	$(MAKE) -$(MFLAGS)
+	cd ..\@CRYPTO_IMPL@
+	@echo Making in crypto\@CRYPTO_IMPL@
+	$(MAKE) -$(MFLAGS)
+	cd ..\crypto_tests
+	@echo Making in crypto\crypto_tests
+	$(MAKE) -$(MFLAGS)
+	cd ..
+
+clean-windows::
+	cd krb
+	@echo Making in clean crypto\krb
+	$(MAKE) -$(MFLAGS) clean
+	cd ..\@CRYPTO_IMPL@
+	@echo Making clean in crypto\@CRYPTO_IMPL@
+	$(MAKE) -$(MFLAGS) clean
+	cd ..\crypto_tests
+	@echo Making clean in crypto\crypto_tests
+	$(MAKE) -$(MFLAGS) clean
+	cd ..
+
+@lib_frag@
+@libobj_frag@
+

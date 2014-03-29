@@ -1,0 +1,8 @@
+.cache
+.foo
+.bar
+dictionary
+test.conf
+radius.log
+radiusd.pid
+cui.sqlite

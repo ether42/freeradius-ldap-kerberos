@@ -1,0 +1,15 @@
+# PRE: if
+#
+#  Conditions which statically evaluate to "false"
+#  have their entire contents skipped on load.
+#
+#  i.e. we can reference things which don't exist,
+#  and they'll get ignored.
+#
+if (0) {
+   no-such-module
+}
+
+update reply {
+	Filter-Id := "filter"
+}
