@@ -18,9 +18,9 @@
  * @file rlm_ldap.c
  * @brief LDAP authorization and authentication module.
  *
- * @author Kevin Boulain <ether@staff.42.fr>
  * @author Arran Cudbard-Bell <a.cudbardb@freeradius.org>
  * @author Alan DeKok <aland@freeradius.org>
+ * modified by Kevin Boulain <kevinboulain@gmail.com>
  *
  * @copyright 2013 Network RADIUS SARL <info@networkradius.com>
  * @copyright 2012-2013 Arran Cudbard-Bell <a.cudbardb@freeradius.org>

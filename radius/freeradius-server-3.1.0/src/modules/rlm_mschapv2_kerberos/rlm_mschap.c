@@ -18,7 +18,7 @@
  * @file rlm_mschap.c
  * @brief Implemented mschap authentication.
  *
- * @author Kevin Boulain <ether@staff.42.fr>
+ * modified by Kevin Boulain <kevinboulain@gmail.com>
  *
  * @copyright 2000,2001,2006  The FreeRADIUS server project
  */
